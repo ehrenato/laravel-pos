@@ -2,30 +2,21 @@
 
 namespace App\Http\Controllers\Site;
 
-use Illuminate\Http\Request;
-//use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Response;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 
-class CategoryController extends BaseController
+use Illuminate\Routing\Controller;
+use App\Category;
+
+
+class CategoryController extends Controller
 {
-   // @return \Illuminate\Http\Response
-
     public function index()
     {
-        return view('site.category.index');
+        return view('site.category.index', ['categories' => Category::all(),]);
     }
 
-
-    //@param int $id
-    //@return \Illuminate\Http\Response
-
-    public function show($slug)
+    public function show(Category $category)
     {
-         return view('site.category.show', ['slug => $slug']);
+        return view('site.category.show', ['category' => $category->load('products')]);
     }
 
 }
